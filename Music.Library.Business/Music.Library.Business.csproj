@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Music.Library.Repository\Music.Library.Repository.csproj" />
+      <ProjectReference Include="..\Music.Library.Shared\Music.Library.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -24,7 +24,7 @@ public class Repository(LibraryDbContext libraryDbContext) : IRepository
         await libraryDbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task RemoveSongToLibraryAsync(int libraryId, string songId, CancellationToken cancellationToken)
+    public async Task RemoveSongFromLibraryAsync(int libraryId, string songId, CancellationToken cancellationToken)
     {
         LibrarySongs? song = await libraryDbContext.LibrarySongsEnumerable.
                 FirstOrDefaultAsync(l => l.LibraryId == libraryId && l.SongId == songId, cancellationToken);
