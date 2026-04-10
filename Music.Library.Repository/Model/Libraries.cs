@@ -1,4 +1,4 @@
-namespace Music.User.Repository.Model;
+namespace Music.Library.Repository.Model;
 
 public class Libraries
 {

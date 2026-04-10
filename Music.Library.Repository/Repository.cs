@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Music.User.Repository.Abstractions;
-using Music.User.Repository.Model;
+using Music.Library.Shared.Exceptions;
+using Music.Library.Repository.Abstractions;
+using Music.Library.Repository.Model;
 
-namespace Music.User.Repository;
+namespace Music.Library.Repository;
 
 public class Repository(LibraryDbContext libraryDbContext) : IRepository
 {
@@ -28,12 +29,12 @@ public class Repository(LibraryDbContext libraryDbContext) : IRepository
     {
         LibrarySongs? song = await libraryDbContext.LibrarySongsEnumerable.
                 FirstOrDefaultAsync(l => l.LibraryId == libraryId && l.SongId == songId, cancellationToken);
-        if (song is not null)
-        {
-            libraryDbContext.Remove(song);
-            await libraryDbContext.SaveChangesAsync(cancellationToken);
-        }
-        //TODO implementare eccezione, SongNotFoundException;
+        if (song is null)
+            throw new ModelNotFoundException("Canzone non presente nella libreria!");
+        
+        libraryDbContext.Remove(song);
+        await libraryDbContext.SaveChangesAsync(cancellationToken);
+        
     }
 
     public async Task CreateLibraryAsync(int userId, CancellationToken cancellationToken)

@@ -11,4 +11,9 @@
       <ProjectReference Include="..\Music.Library.Shared\Music.Library.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Music.Catalogue.ClientHttp" Version="1.0.6" />
+      <PackageReference Include="Music.Catalogue.Shared" Version="1.0.6" />
+    </ItemGroup>
+
 </Project>

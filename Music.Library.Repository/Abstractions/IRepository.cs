@@ -1,12 +1,12 @@
-using Music.User.Repository.Model;
+using Music.Library.Repository.Model;
 
-namespace Music.User.Repository.Abstractions;
+namespace Music.Library.Repository.Abstractions;
 
 public interface IRepository
 {
     public Task<Libraries?> GetLibraryByUserIdAsync(int userId, CancellationToken cancellationToken);
     public Task AddSongToLibraryAsync(int libraryId, string songId, CancellationToken cancellationToken);
-    public Task RemoveSongToLibraryAsync(int libraryId, string songId, CancellationToken cancellationToken);
+    public Task RemoveSongFromLibraryAsync(int libraryId, string songId, CancellationToken cancellationToken);
     public Task CreateLibraryAsync(int userId, CancellationToken cancellationToken);
     public Task<List<LibrarySongs>> GetCanzoniByLibreriaAsync(int libraryId, CancellationToken cancellationToken);
 }

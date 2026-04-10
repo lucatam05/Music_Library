@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Music.User.Repository.Model;
+using Music.Library.Repository.Model;
 
-namespace Music.User.Repository;
+namespace Music.Library.Repository;
 
 public class LibraryDbContext(DbContextOptions<LibraryDbContext> dbContextOptions) : DbContext(dbContextOptions)
 {
