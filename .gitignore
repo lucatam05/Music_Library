@@ -485,3 +485,6 @@ $RECYCLE.BIN/
 
 # NuGet.config
 NuGet.config
+
+# Sensitive configuration files
+appsettings.Development.json

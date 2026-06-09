@@ -14,6 +14,7 @@
     <ItemGroup>
       <PackageReference Include="Music.Catalogue.ClientHttp" Version="1.0.6" />
       <PackageReference Include="Music.Catalogue.Shared" Version="1.0.6" />
+      <PackageReference Include="Utility.Kafka.2025" Version="2.0.1" />
     </ItemGroup>
 
 </Project>

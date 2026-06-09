@@ -1,14 +1,18 @@
-using Microsoft.Extensions.Configuration;
+using System.Text.Json;
 using Music.Catalogue.ClientHttp.Abstractions;
 using Music.Catalogue.Shared;
 using Music.Catalogue.Shared.Exceptions;
 using Music.Library.Business.Abstractions;
+using Music.Library.Repository.Abstractions;
+using Music.Library.Repository.Model;
 using Music.Library.Shared;
+using Music.Library.Shared.Events;
+using Utility.Kafka.Abstractions.Clients;
 
 
 namespace Music.Library.Business;
 
-public class Business(IRepository repository, IClientHttp clientHttp) : IBusiness
+public class Business(IRepository repository, IClientHttp clientHttp, IProducerClient<string, string> producerClient) : IBusiness
 {
     public async Task<LibraryDTO?> GetLibraryByUserIdAsync(int userId, CancellationToken cancellationToken)
     {
@@ -37,10 +41,20 @@ public class Business(IRepository repository, IClientHttp clientHttp) : IBusines
         
         await repository.AddSongToLibraryAsync(library.Id, songId, cancellationToken);
 
-        // 4. TODO: pubblica evento Kafka
+        var songAddedEvent = new SongAddedEvent
+        {
+            UserId = userId,
+            SpotifyId = songId
+        };
+        
+        await producerClient.ProduceAsync(
+            "song-added-to-library",
+            userId.ToString(),
+            JsonSerializer.Serialize(songAddedEvent),
+            cancellationToken);
     }
 
-    public async Task RemoveSongToLibraryAsync(int userId, string songId, CancellationToken cancellationToken)
+    public async Task RemoveSongFromLibraryAsync(int userId, string songId, CancellationToken cancellationToken)
     {
         Libraries? library = await repository.GetLibraryByUserIdAsync(userId, cancellationToken);
         if (library is null)
