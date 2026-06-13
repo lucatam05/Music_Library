@@ -7,7 +7,7 @@
         <IsPackable>true</IsPackable>
 
         <PackageId>Music.Library.Shared</PackageId>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <Authors>lucatam05</Authors>
         <Description>Shared DTOs for Music Library Service</Description>
         <RepositoryUrl>https://github.com/lucatam05/Music_Library</RepositoryUrl>
