@@ -4,6 +4,13 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+
+        <PackageId>Music.Library.Shared</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>lucatam05</Authors>
+        <Description>Shared DTOs for Music Library Service</Description>
+        <RepositoryUrl>https://github.com/lucatam05/Music_Library</RepositoryUrl>
     </PropertyGroup>
 
 </Project>

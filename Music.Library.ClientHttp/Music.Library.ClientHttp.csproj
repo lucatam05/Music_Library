@@ -4,6 +4,17 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable> 
+
+        <PackageId>Music.Library.ClientHttp</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>lucatam05</Authors>
+        <Description>HTTP Client for Music Library Service</Description>
+        <RepositoryUrl>https://github.com/lucatam05/Music_Library</RepositoryUrl>
     </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Music.Library.Shared\Music.Library.Shared.csproj" />
+    </ItemGroup>
 
 </Project>

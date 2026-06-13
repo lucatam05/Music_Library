@@ -1,0 +1,36 @@
+name: Publish NuGet
+
+on:
+  push:
+    tags: [ "v*" ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+          
+          
+      - name: Pack Shared
+        run: dotnet pack Music.Library.Shared/Music.Library.Shared.csproj --configuration Release
+        
+      - name: Restore ClientHttp
+        run: dotnet restore Music.Library.ClientHttp/Music.Library.ClientHttp.csproj
+        
+      - name: Pack ClientHttp
+        run: dotnet pack Music.Library.ClientHttp/Music.Library.ClientHttp.csproj --configuration Release
+        
+      - name: Push Shared
+        run: dotnet nuget push "Music.Library.Shared/bin/Release/*.nupkg" --source "https://nuget.pkg.github.com/lucatam05/index.json" --skip-duplicate --api-key ${{ secrets.NUGET_TOKEN }}
+        
+      - name: Push ClientHttp
+        run: dotnet nuget push "Music.Library.ClientHttp/bin/Release/*.nupkg" --source "https://nuget.pkg.github.com/lucatam05/index.json" --skip-duplicate --api-key ${{ secrets.NUGET_TOKEN }}
+
