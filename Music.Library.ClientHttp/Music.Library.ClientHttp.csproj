@@ -7,7 +7,7 @@
         <IsPackable>true</IsPackable> 
 
         <PackageId>Music.Library.ClientHttp</PackageId>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
         <Authors>lucatam05</Authors>
         <Description>HTTP Client for Music Library Service</Description>
         <RepositoryUrl>https://github.com/lucatam05/Music_Library</RepositoryUrl>
