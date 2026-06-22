@@ -10,6 +10,7 @@ ARG NUGET_USERNAME
 ARG NUGET_PASSWORD
 WORKDIR /src
 COPY . .
+RUN dotnet nuget remove source lucatam05 || true
 RUN dotnet nuget add source "https://nuget.pkg.github.com/lucatam05/index.json" --name lucatam05 --username $NUGET_USERNAME --password $NUGET_PASSWORD --store-password-in-clear-text
 RUN dotnet restore "Music.Library.WebApi/Music.Library.WebApi.csproj"
 WORKDIR "/src/Music.Library.WebApi"
