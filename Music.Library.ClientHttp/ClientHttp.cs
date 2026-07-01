@@ -23,8 +23,7 @@ public class ClientHttp(HttpClient httpClient) : IClientHttp
         httpClient.DefaultRequestHeaders.Authorization = 
             new AuthenticationHeaderValue("Bearer", token);
         
-        var response = await httpClient.GetAsync("/Library/GetLibraryPerIdAsync", cancellationToken);
-        if (!response.IsSuccessStatusCode)
+        var response = await httpClient.GetAsync("/Library/GetLibrary", cancellationToken);        if (!response.IsSuccessStatusCode)
             return null;
         
         return await response.Content.ReadFromJsonAsync<List<LibrarySongDTO>>(cancellationToken: cancellationToken);
