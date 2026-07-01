@@ -11,7 +11,7 @@ namespace MusicLibrary.Controllers;
 [Route("[controller]/[action]")]
 public class LibraryController(IBusiness business) : ControllerBase
 {
-    [HttpGet(Name = "GetLibrary")]
+    [HttpGet("GetLibrary")]
     public async Task<ActionResult> GetLibraryPerIdAsync(CancellationToken cancellationToken = default)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
