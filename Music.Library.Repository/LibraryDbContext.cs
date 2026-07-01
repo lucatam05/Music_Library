@@ -14,6 +14,11 @@ public class LibraryDbContext(DbContextOptions<LibraryDbContext> dbContextOption
         
         modelBuilder.Entity<LibrarySongs>().HasKey(s => s.Id);
         modelBuilder.Entity<LibrarySongs>().Property(s => s.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<LibrarySongs>()
+            .Property(u => u.DataAggiunta)
+            .HasConversion(
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
         modelBuilder.Entity<LibrarySongs>().ToTable("LibrarySongs");
         
     }
