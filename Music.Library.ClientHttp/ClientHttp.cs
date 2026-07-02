@@ -25,7 +25,7 @@ public class ClientHttp(HttpClient httpClient) : IClientHttp
         httpClient.DefaultRequestHeaders.Authorization = 
             new AuthenticationHeaderValue("Bearer", token);
         
-        var response = await httpClient.GetAsync("/Library/GetLibrary", cancellationToken);     
+        var response = await httpClient.GetAsync("/Library/GetLibraryPerIdAsync", cancellationToken);     
         Console.WriteLine($"Response: {response.StatusCode}");
         if (!response.IsSuccessStatusCode)
             return null;
