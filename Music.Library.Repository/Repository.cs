@@ -49,6 +49,17 @@ public class Repository(LibraryDbContext libraryDbContext) : IRepository
         await libraryDbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task RenameLibraryAsync(int userId, string nome, CancellationToken cancellationToken)
+    {
+        Libraries? library = await GetLibraryByUserIdAsync(userId, cancellationToken);
+        if (library is null)
+            throw new ModelNotFoundException("Libreria non trovata!");
+        
+        library.Nome = nome;
+        
+        await libraryDbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<List<LibrarySongs>> GetCanzoniByLibreriaAsync(int libraryId, CancellationToken cancellationToken)
     {
         return await libraryDbContext.LibrarySongsEnumerable.Where(l => l.LibraryId == libraryId)

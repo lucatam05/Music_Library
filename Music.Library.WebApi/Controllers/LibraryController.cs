@@ -67,11 +67,33 @@ public class LibraryController(IBusiness business) : ControllerBase
             return NotFound(ex.Message);
         }
     }
+    
     [HttpPost(Name = "CreateLibrary")]
     [AllowAnonymous]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public async Task<ActionResult> CreateLibraryAsync(int userId, CancellationToken cancellationToken)
     {
         await business.CreateLibraryAsync(userId, cancellationToken);
         return Ok();
+    }
+
+    [HttpPost(Name = "RenameLibrary")]
+    public async Task<ActionResult> RenameLibraryAsync(string nome, CancellationToken cancellationToken)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userIdClaim is null)
+            return Unauthorized();
+    
+        int userId = int.Parse(userIdClaim);
+        try
+        {
+            await business.RenameLibraryAsync(userId, nome, cancellationToken);
+            return Ok();
+        }
+        catch (ModelNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        
     }
 }

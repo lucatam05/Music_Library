@@ -80,6 +80,11 @@ public class Business(IRepository repository, IClientHttp clientHttp, IProducerC
         await repository.CreateLibraryAsync(userId, cancellationToken);
     }
 
+    public async Task RenameLibraryAsync(int userId, string nome, CancellationToken cancellationToken)
+    {
+        await repository.RenameLibraryAsync(userId, nome, cancellationToken);
+    }
+
     public async Task<List<LibrarySongDTO>?> GetCanzoniByLibreriaAsync(int userId, CancellationToken cancellationToken)
     {
         Libraries? library = await repository.GetLibraryByUserIdAsync(userId, cancellationToken);
