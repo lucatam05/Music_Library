@@ -69,7 +69,7 @@ public class Business(IRepository repository, IClientHttp clientHttp, IProducerC
         };
         
         await producerClient.ProduceAsync(
-            "song-removed-fro-library",
+            "song-removed-from-library",
             userId.ToString(),
             JsonSerializer.Serialize(songRemovedEvent),
             cancellationToken);
