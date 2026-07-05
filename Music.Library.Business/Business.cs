@@ -61,6 +61,18 @@ public class Business(IRepository repository, IClientHttp clientHttp, IProducerC
             throw new ModelNotFoundException("Libreria non trovata");
         
         await repository.RemoveSongFromLibraryAsync(library.Id, songId, cancellationToken);
+        
+        var songRemovedEvent = new SongRemovedEvent
+        {
+            UserId = userId,
+            SpotifyId = songId
+        };
+        
+        await producerClient.ProduceAsync(
+            "song-added-to-library",
+            userId.ToString(),
+            JsonSerializer.Serialize(songRemovedEvent),
+            cancellationToken);
     }
 
     public async Task CreateLibraryAsync(int userId, CancellationToken cancellationToken)
