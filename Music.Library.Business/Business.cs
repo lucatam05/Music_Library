@@ -35,7 +35,7 @@ public class Business(IRepository repository, IClientHttp clientHttp, IProducerC
         if (library is null)
             throw new ModelNotFoundException("Libreria non trovata");
 
-        SongDTO? song = await clientHttp.SearchCanzoniByIDSpotify(songId, cancellationToken);
+        SongDTO? song = await clientHttp.SearchCanzoniByIdSpotify(songId, cancellationToken);
         if (song is null)
             throw new ModelNotFoundException("Canzone non trovata");
         
@@ -96,7 +96,7 @@ public class Business(IRepository repository, IClientHttp clientHttp, IProducerC
         List<LibrarySongDTO> result = new List<LibrarySongDTO>();
         foreach (var canzone in canzoni)
         {
-            SongDTO? song = await clientHttp.SearchCanzoniByIDSpotify(canzone.SongId, cancellationToken);
+            SongDTO? song = await clientHttp.SearchCanzoniByIdSpotify(canzone.SongId, cancellationToken);
             if (song is not null)
             {
                 result.Add(new LibrarySongDTO
