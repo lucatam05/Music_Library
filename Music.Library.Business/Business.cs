@@ -9,7 +9,6 @@ using Music.Library.Shared;
 using Music.Library.Shared.Events;
 using Utility.Kafka.Abstractions.Clients;
 
-
 namespace Music.Library.Business;
 
 public class Business(IRepository repository, IClientHttp clientHttp, IProducerClient<string, string> producerClient) : IBusiness
