@@ -101,6 +101,9 @@ public class Business(IRepository repository, IClientHttp clientHttp, IProducerC
             {
                 result.Add(new LibrarySongDTO
                 {
+                    Id = canzone.Id,
+                    LibraryId = library.Id,
+                    NomeLibreria = library.Nome,
                     SongId = song.SpotifyId,
                     Titolo = song.Titolo,
                     Artista = song.Artista,
