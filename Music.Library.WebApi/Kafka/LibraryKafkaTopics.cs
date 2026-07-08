@@ -1,4 +1,3 @@
-using Utility.Kafka;
 namespace MusicLibrary.Kafka;
 
 public class LibraryKafkaTopics : AbstractKafkaTopics

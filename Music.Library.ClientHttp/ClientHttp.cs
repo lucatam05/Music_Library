@@ -20,13 +20,10 @@ public class ClientHttp(HttpClient httpClient) : IClientHttp
 
     public async Task<List<LibrarySongDTO>?> GetCanzoniUtenteAsync(string token, CancellationToken cancellationToken)
     {
-        Console.WriteLine($"Token: {token}");
-
         httpClient.DefaultRequestHeaders.Authorization = 
             new AuthenticationHeaderValue("Bearer", token);
         
         var response = await httpClient.GetAsync("/Library/GetLibraryPerId", cancellationToken);     
-        Console.WriteLine($"Response: {response.StatusCode}");
         if (!response.IsSuccessStatusCode)
             return null;
         

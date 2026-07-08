@@ -29,7 +29,6 @@ public class Business(IRepository repository, IClientHttp clientHttp, IProducerC
     
     public async Task AddSongToLibraryAsync(int userId, string songId, CancellationToken cancellationToken) 
     {
-        
         Libraries? library = await repository.GetLibraryByUserIdAsync(userId, cancellationToken);
         if (library is null)
             throw new ModelNotFoundException("Libreria non trovata");
