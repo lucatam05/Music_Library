@@ -99,8 +99,8 @@ using (var scope = app.Services.CreateScope())
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/index.html", "API V1");
-    c.RoutePrefix = string.Empty; // ← questa riga fa aprire Swagger sulla root "/"
+    c.SwaggerEndpoint("/v1/swagger.json", "API V1");
+    c.RoutePrefix = string.Empty;
 });
 app.UseAuthentication();
 app.UseAuthorization();
