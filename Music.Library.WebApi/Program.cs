@@ -97,8 +97,10 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseSwagger();
-app.UseSwaggerUI();
-app.MapGet("/", () => Results.Redirect("/swagger"));
+app.UseSwaggerUI(c =>
+{
+    c.RoutePrefix = string.Empty;
+});
 app.UseAuthentication();
 app.UseAuthorization();
 
