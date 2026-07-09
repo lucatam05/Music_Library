@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Music.Catalogue.ClientHttp.Abstractions;
 using Music.Catalogue.Shared;
-using Music.Catalogue.Shared.Exceptions;
+using Music.Library.Shared.Exceptions;
 using Music.Library.Business.Abstractions;
 using Music.Library.Repository.Abstractions;
 using Music.Library.Repository.Model;

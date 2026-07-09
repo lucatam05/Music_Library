@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Music.Library.Business.Abstractions;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Music.Catalogue.Shared.Exceptions;
+using Music.Library.Shared.Exceptions;
 
 namespace MusicLibrary.Controllers;
 
