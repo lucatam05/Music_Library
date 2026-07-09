@@ -98,8 +98,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseSwagger();
 app.UseSwaggerUI();
-app.MapGet("/", () => Results.Redirect("/swagger"))
-    .ExcludeFromDescription();
+app.MapGet("/", () => Results.Redirect("/swagger"));
 app.UseAuthentication();
 app.UseAuthorization();
 
