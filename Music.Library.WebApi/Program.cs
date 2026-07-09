@@ -97,11 +97,9 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.RoutePrefix = string.Empty;
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Music.Library.WebApi v1");
-});
+app.UseSwaggerUI();
+app.MapGet("/", () => Results.Redirect("/swagger"))
+    .ExcludeFromDescription();
 app.UseAuthentication();
 app.UseAuthorization();
 
