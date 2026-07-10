@@ -74,8 +74,6 @@ Authorization: Bearer <token>
 
 Il modo consigliato è tramite Docker Compose dal repository [Music_Compose](https://github.com/lucatam05/Music_Compose).
 
-Swagger sarà disponibile su `http://localhost:5002/swagger`.
-
 ---
 
 ## Pacchetto NuGet
