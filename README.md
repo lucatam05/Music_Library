@@ -78,5 +78,5 @@ Il modo consigliato è tramite Docker Compose dal repository [Music_Compose](htt
 
 ## Pacchetto NuGet
 
-Il progetto pubblica il pacchetto `Music.Library.ClientHttp` e 'Music.Library.Shared' su GitHub Packages, usato dal UserService per comunicare con questo servizio.
+Il progetto pubblica il pacchetto `Music.Library.ClientHttp` e `Music.Library.Shared` su GitHub Packages, usato dal UserService per comunicare con questo servizio.
 
