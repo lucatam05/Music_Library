@@ -3,12 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Music.Catalogue.ClientHttp;
 using Music.Library.Business;
 using Music.Library.Business.Abstractions;
 using Music.Library.Repository;
 using Music.Library.Repository.Abstractions;
-using Music.Catalogue.ClientHttp.Abstractions;
+using MusicLibrary;
 using MusicLibrary.Kafka;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,11 +18,7 @@ builder.Services.AddDbContext<LibraryDbContext>(options =>
 
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IBusiness, Business>();
-builder.Services.AddHttpClient<IClientHttp, ClientHttp>("CatalogueClient", client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["Services:Catalogue"]!);
-});
-
+builder.Services.AddResilientHttpClients(builder.Configuration);
 builder.Services.AddKafkaProducerService<LibraryKafkaTopics, LibraryProducerService>(builder.Configuration);
 
 // JWT Authentication
