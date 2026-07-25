@@ -11,7 +11,11 @@ using Utility.Kafka.Abstractions.Clients;
 
 namespace Music.Library.Business;
 
-public class Business(IRepository repository, IClientHttp clientHttp, IProducerClient<string, string> producerClient) : IBusiness
+public class Business(
+    IRepository repository,
+    IClientHttp clientHttp,
+    IProducerClient<string, string> producerClient,
+    ICorrelationIdProvider correlationIdProvider) : IBusiness
 {
     public async Task<LibraryDTO?> GetLibraryByUserIdAsync(int userId, CancellationToken cancellationToken)
     {
@@ -42,7 +46,8 @@ public class Business(IRepository repository, IClientHttp clientHttp, IProducerC
         var songAddedEvent = new SongAddedEvent
         {
             UserId = userId,
-            SpotifyId = songId
+            SpotifyId = songId,
+            CorrelationId = correlationIdProvider.CorrelationId
         };
         
         await producerClient.ProduceAsync(
@@ -63,7 +68,8 @@ public class Business(IRepository repository, IClientHttp clientHttp, IProducerC
         var songRemovedEvent = new SongRemovedEvent
         {
             UserId = userId,
-            SpotifyId = songId
+            SpotifyId = songId,
+            CorrelationId = correlationIdProvider.CorrelationId
         };
         
         await producerClient.ProduceAsync(
