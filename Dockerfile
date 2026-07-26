@@ -1,4 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+# curl serve all'HEALTHCHECK definito nel docker-compose (non incluso di default nell'immagine)
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
