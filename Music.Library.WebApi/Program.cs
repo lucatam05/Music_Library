@@ -13,6 +13,7 @@ using MusicLibrary.Correlation;
 using MusicLibrary.HealthChecks;
 using MusicLibrary.Kafka;
 using MusicLibrary.Middlewares;
+using MusicLibrary.Outbox;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -42,6 +43,7 @@ try
     builder.Services.AddScoped<ICorrelationIdProvider, CorrelationIdProvider>();
 
     builder.Services.AddResilientHttpClients(builder.Configuration);
+    builder.Services.Configure<OutboxOptions>(builder.Configuration.GetSection(OutboxOptions.SectionName));
     builder.Services.AddKafkaProducerService<LibraryKafkaTopics, LibraryProducerService>(builder.Configuration);
 
     builder.Services.AddHealthChecks()

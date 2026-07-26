@@ -7,14 +7,12 @@ using Music.Library.Repository.Abstractions;
 using Music.Library.Repository.Model;
 using Music.Library.Shared;
 using Music.Library.Shared.Events;
-using Utility.Kafka.Abstractions.Clients;
 
 namespace Music.Library.Business;
 
 public class Business(
     IRepository repository,
     IClientHttp clientHttp,
-    IProducerClient<string, string> producerClient,
     ICorrelationIdProvider correlationIdProvider) : IBusiness
 {
     public async Task<LibraryDTO?> GetLibraryByUserIdAsync(int userId, CancellationToken cancellationToken)
@@ -41,20 +39,24 @@ public class Business(
         if (song is null)
             throw new ModelNotFoundException("Canzone non trovata");
         
-        await repository.AddSongToLibraryAsync(library.Id, songId, cancellationToken);
-
         var songAddedEvent = new SongAddedEvent
         {
             UserId = userId,
             SpotifyId = songId,
             CorrelationId = correlationIdProvider.CorrelationId
         };
-        
-        await producerClient.ProduceAsync(
-            "song-added-to-library",
-            userId.ToString(),
-            JsonSerializer.Serialize(songAddedEvent),
-            cancellationToken);
+
+        var outboxMessage = new OutboxMessage
+        {
+            Topic = "song-added-to-library",
+            Key = userId.ToString(),
+            Payload = JsonSerializer.Serialize(songAddedEvent),
+            CreatedAt = DateTime.UtcNow
+        };
+
+        // Canzone e messaggio outbox vengono scritti nella STESSA transazione DB:
+        // la pubblicazione effettiva su Kafka avviene poi in modo asincrono dal poller (LibraryProducerService).
+        await repository.AddSongToLibraryAsync(library.Id, songId, outboxMessage, cancellationToken);
     }
 
     public async Task RemoveSongFromLibraryAsync(int userId, string songId, CancellationToken cancellationToken)
@@ -63,20 +65,22 @@ public class Business(
         if (library is null)
             throw new ModelNotFoundException("Libreria non trovata");
         
-        await repository.RemoveSongFromLibraryAsync(library.Id, songId, cancellationToken);
-        
         var songRemovedEvent = new SongRemovedEvent
         {
             UserId = userId,
             SpotifyId = songId,
             CorrelationId = correlationIdProvider.CorrelationId
         };
-        
-        await producerClient.ProduceAsync(
-            "song-removed-from-library",
-            userId.ToString(),
-            JsonSerializer.Serialize(songRemovedEvent),
-            cancellationToken);
+
+        var outboxMessage = new OutboxMessage
+        {
+            Topic = "song-removed-from-library",
+            Key = userId.ToString(),
+            Payload = JsonSerializer.Serialize(songRemovedEvent),
+            CreatedAt = DateTime.UtcNow
+        };
+
+        await repository.RemoveSongFromLibraryAsync(library.Id, songId, outboxMessage, cancellationToken);
     }
 
     public async Task CreateLibraryAsync(int userId, CancellationToken cancellationToken)
